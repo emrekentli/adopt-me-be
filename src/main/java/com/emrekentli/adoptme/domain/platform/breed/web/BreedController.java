@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/animal-types")
+@RequestMapping("/breeds")
 @RestController
 public class BreedController extends BaseController {
     private final BreedService service;
