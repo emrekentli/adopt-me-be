@@ -1,6 +1,8 @@
 package com.emrekentli.adoptme.domain.authentication.user.impl;
 
 import com.emrekentli.adoptme.domain.authentication.user.api.UserRetrievalService;
+import com.emrekentli.adoptme.library.enums.MessageCodes;
+import com.emrekentli.adoptme.library.exception.CoreException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +23,6 @@ public class UserRetrievalServiceImpl implements UserRetrievalService {
     public String getCurrentUserId() {
         return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
                 .map(Authentication::getName)
-                .orElseThrow(() -> new IllegalArgumentException("User id cannot be retrieved from JWT"));
+                .orElseThrow(() -> new CoreException(MessageCodes.FAIL));
     }
 }

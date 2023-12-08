@@ -9,6 +9,8 @@ import com.emrekentli.adoptme.domain.authentication.role.impl.Role;
 import com.emrekentli.adoptme.domain.authentication.role.impl.RoleServiceImpl;
 import com.emrekentli.adoptme.domain.authentication.user.api.UserDto;
 import com.emrekentli.adoptme.domain.authentication.user.api.UserService;
+import com.emrekentli.adoptme.library.enums.MessageCodes;
+import com.emrekentli.adoptme.library.exception.CoreException;
 import com.emrekentli.adoptme.library.util.PageUtil;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -50,13 +52,13 @@ public class UserServiceImpl implements UserService {
                 .map(user -> toEntity(user, dto))
                 .map(repository::save)
                 .map(this::toDto)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,User.class.getSimpleName(),id));
     }
 
     @Override
     @Transactional
     public void deleteUser(String id) {
-        repository.delete(repository.findById(id).orElseThrow(EntityNotFoundException::new));
+        repository.delete(repository.findById(id).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,User.class.getSimpleName(),id)));
     }
 
     @Override
@@ -81,7 +83,7 @@ public class UserServiceImpl implements UserService {
     public UserDto getByUserName(String userName) {
         return repository.findByUserName(userName)
                 .map(this::toDto)
-                .orElseThrow(() -> new EntityNotFoundException("User not found."));
+                .orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,User.class.getSimpleName(),userName));
     }
 
     @Override
@@ -90,11 +92,11 @@ public class UserServiceImpl implements UserService {
                 .map(user -> toEntity(user, dto))
                 .map(repository::save)
                 .map(this::toDto)
-                .orElseThrow(EntityNotFoundException::new);
+              .orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,User.class.getSimpleName(),userRetrievalService.getCurrentUserId()));
     }
     @Override
     public UserDto addRoleToUser(UserRoleDto dto) {
-        var user = repository.findById(dto.getUserId()).orElseThrow(EntityNotFoundException::new);
+        var user = repository.findById(dto.getUserId()).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,User.class.getSimpleName(),dto.getUserId()));
         var role = roleService.findRoleById(dto.getRoleId());
         checkUserHasRole(user, role);
         user.getRoles().add(role);
@@ -103,10 +105,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto removeRoleToUser(UserRoleDto dto) {
-        var user = repository.findById(dto.getUserId()).orElseThrow(EntityNotFoundException::new);
+        var user = repository.findById(dto.getUserId()).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,User.class.getSimpleName(),dto.getUserId()));
         var role = roleService.findRoleById(dto.getRoleId());
         if(role.getName().equals("ROLE_ADMIN")){
-            throw new IllegalArgumentException("Admin role cannot be removed");
+            throw new CoreException(MessageCodes.FAIL);
         }
         user.getRoles().remove(role);
         return toDto(repository.save(user));
@@ -119,7 +121,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getUserByUserName(String username) {
-        return repository.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException("Kayıt bulunamadı"));
+        return repository.findByUserName(username).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,User.class.getSimpleName(),username));
     }
 
     public void saveUser(User user) {
@@ -170,7 +172,7 @@ public class UserServiceImpl implements UserService {
     public void checkUserExists(String userName) {
         repository.findByEmail(userName)
                 .ifPresent(u -> {
-                    throw new IllegalArgumentException("User with userName " + userName + " already exist");
+                    throw new CoreException(MessageCodes.ENTITY_ALREADY_EXISTS,User.class.getSimpleName(),userName);
                 });
     }
 }

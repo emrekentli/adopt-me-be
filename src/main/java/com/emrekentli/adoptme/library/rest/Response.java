@@ -1,12 +1,16 @@
 package com.emrekentli.adoptme.library.rest;
 
-public class Response<T> {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Response<T>{
 
     private T data;
     private MetaResponse meta;
-
-    public Response() {
-    }
 
     public Response(MetaResponse meta) {
         this.meta = meta;
@@ -14,13 +18,16 @@ public class Response<T> {
 
     public Response(T data) {
         this.data = data;
+        this.meta = MetaResponse.success();
     }
 
-    public MetaResponse getMeta() {
-        return meta;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("data: ");
+        sb.append(data != null ? data.toString() : "null");
+        sb.append(", meta: ");
+        sb.append(meta != null ? meta.toString() : "null");
+        return sb.toString();
     }
 
-    public T getData() {
-        return data;
-    }
 }

@@ -26,7 +26,7 @@ public class AuthenticationController extends BaseController {
     @PostMapping("/register")
     public Response<Void> register(@Valid @RequestBody UserRequest request) {
         service.register(request);
-        return new Response<>(MetaResponse.ofSuccess());
+        return new Response<>(MetaResponse.success());
     }
 
 

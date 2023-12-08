@@ -40,7 +40,7 @@ public class RoleController extends BaseController {
     @DeleteMapping("/{id}")
     public Response<Void> deleteRole(@PathVariable(name = "id") String id) {
         service.deleteRole(id);
-        return new Response<>(MetaResponse.ofSuccess());
+        return new Response<>(MetaResponse.success());
     }
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 

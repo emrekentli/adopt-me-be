@@ -45,7 +45,7 @@ public class UserController extends BaseController {
     @DeleteMapping("/{id}")
     public Response<Void> deleteUser(@PathVariable(name = "id") String id) {
         service.deleteUser(id);
-        return new Response<>(MetaResponse.ofSuccess());
+        return new Response<>(MetaResponse.success());
     }
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 

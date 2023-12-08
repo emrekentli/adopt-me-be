@@ -17,10 +17,6 @@ public class ResponseBuilder {
         return new Response<>(new PageResponse<>(items));
     }
 
-    public static <T> Response<DataResponse<T>> build(List<T> items, Integer page, Integer size, Long totalSize, int totalPage) {
-        return new Response<>(new DataResponse<>(items, page, size, totalSize, totalPage));
-    }
-
     public static <T> Response<T> build(T item) {
         return new Response<>(item);
     }
