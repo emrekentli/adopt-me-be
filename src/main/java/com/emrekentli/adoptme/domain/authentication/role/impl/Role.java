@@ -1,6 +1,6 @@
 package com.emrekentli.adoptme.domain.authentication.role.impl;
 import com.emrekentli.adoptme.domain.authentication.role.api.RoleDto;
-import com.emrekentli.adoptme.library.entity.AbstractEntity;
+import com.emrekentli.adoptme.library.rest.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

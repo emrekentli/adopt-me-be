@@ -18,6 +18,7 @@ public class UserResponse {
     private final String password;
     private final String fullName;
     private final String email;
+    private final String image;
     private final String phoneNumber;
     private final Boolean activity;
     private final Set<RoleDto> roles;
@@ -34,6 +35,7 @@ public class UserResponse {
                 .phoneNumber(dto.getPhoneNumber())
                 .activity(dto.getActivity())
                 .roles(dto.getRoles())
+                .image(dto.getImage())
                 .build();
     }
 }

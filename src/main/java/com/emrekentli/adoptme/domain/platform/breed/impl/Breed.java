@@ -1,6 +1,6 @@
 package com.emrekentli.adoptme.domain.platform.breed.impl;
 
-import com.emrekentli.adoptme.library.entity.AbstractEntity;
+import com.emrekentli.adoptme.library.rest.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

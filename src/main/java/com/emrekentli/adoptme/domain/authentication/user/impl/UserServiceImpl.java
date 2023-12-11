@@ -133,6 +133,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(randomPassword()));
         user.setActivity(true);
         user.setFullName(dto.getFullName());
+        user.setImage(dto.getImage());
         user.setEmail(dto.getEmail());
         user.setPhoneNumber(dto.getPhoneNumber());
         user.setRoles(dto.getRoles() != null ? roleService.getRolesByRoleNames(dto.getRoles().stream().map(RoleDto::getName).collect(Collectors.toSet())) : null);
@@ -144,6 +145,7 @@ public class UserServiceImpl implements UserService {
         user.setActivity(true);
         user.setFullName(dto.getFullName());
         user.setEmail(dto.getEmail());
+        user.setImage(dto.getImage());
         user.setPhoneNumber(dto.getPhoneNumber());
         user.setRoles(dto.getRoles() != null ? roleService.getRolesByRoleNames(dto.getRoles().stream().map(RoleDto::getName).collect(Collectors.toSet())) : roleService.getByRoleEntityByName("ROLE_USER"));
         return user;
@@ -160,6 +162,7 @@ public class UserServiceImpl implements UserService {
                 .created(user.getCreated())
                 .modified(user.getModified())
                 .userName(user.getUserName())
+                .image(user.getImage())
                 .phoneNumber(user.getPhoneNumber())
                 .email(user.getEmail())
                 .activity(user.getActivity())

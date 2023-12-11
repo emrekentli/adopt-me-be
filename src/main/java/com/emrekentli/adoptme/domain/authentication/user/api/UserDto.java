@@ -16,10 +16,9 @@ public class UserDto {
     private final String userName;
     private final String password;
     private final Boolean activity;
+    private final String image;
     private final Set<RoleDto> roles;
     private final String fullName;
     private final String email;
     private final String phoneNumber;
-    private final List<String> catchList;
-    private final List<String> wishList;
 }

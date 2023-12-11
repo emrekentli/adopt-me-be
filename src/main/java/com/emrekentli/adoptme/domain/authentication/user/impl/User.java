@@ -2,7 +2,7 @@ package com.emrekentli.adoptme.domain.authentication.user.impl;
 
 
 import com.emrekentli.adoptme.domain.authentication.role.impl.Role;
-import com.emrekentli.adoptme.library.entity.AbstractEntity;
+import com.emrekentli.adoptme.library.rest.AbstractEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,13 +31,20 @@ public class User extends AbstractEntity {
     public static final String TABLE_USER_ROLE = "user_role";
     public static final String COL_ROLE_ID = "role_id";
     public static final String COL_USER_ID = "user_id";
+    public static final String COL_IMAGE = "image";
 
 
 
     @Column(name = COL_FULL_NAME)
     private  String fullName;
+
+    @Column(name = COL_IMAGE)
+    private  String image;
+
+
     @Column(name = COL_EMAIL)
     private  String email;
+
     @Column(name = COL_PHONE_NUMBER)
     private  String phoneNumber;
 
