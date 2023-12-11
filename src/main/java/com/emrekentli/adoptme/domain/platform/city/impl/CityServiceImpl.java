@@ -1,4 +1,6 @@
 package com.emrekentli.adoptme.domain.platform.city.impl;
+
+import com.emrekentli.adoptme.domain.authentication.user.impl.User;
 import com.emrekentli.adoptme.domain.platform.city.api.CityDto;
 import com.emrekentli.adoptme.domain.platform.city.api.CityService;
 import com.emrekentli.adoptme.library.enums.MessageCodes;
@@ -11,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static com.emrekentli.adoptme.domain.platform.city.impl.CityMapper.toEntity;
 
 @Service
@@ -18,40 +22,38 @@ import static com.emrekentli.adoptme.domain.platform.city.impl.CityMapper.toEnti
 @Transactional(readOnly = true)
 public class CityServiceImpl implements CityService {
     private final CityRepository repository;
+
     @Override
-    public Page<CityDto> getAll(Pageable pageable) {
-        return PageUtil.pageToDto(repository.findAll(pageable), CityMapper::toDto);
+    public Page<CityDto> filter(CityDto dto, Pageable pageable) {
+        return PageUtil.pageToDto(repository.findAll(Example.of(toEntity(new City(), dto)), pageable), CityMapper::toDto);
     }
-    @Override
-    public CityDto getById(String id) {
-        return repository.findById(id).map(CityMapper::toDto)
-                .orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, City.class.getSimpleName(),id));
-    }
+
     @Override
     @Transactional
-    public CityDto save(CityDto dto) {
-        return CityMapper.toDto(repository.save(toEntity(new City(),dto)));
+    public CityDto create(CityDto dto) {
+        return CityMapper.toDto(repository.save(toEntity(new City(), dto)));
     }
+
+    @Override
+    public List<CityDto> getAll() {
+        return repository.findAll().stream().map(CityMapper::toDto).toList();
+    }
+
     @Override
     @Transactional
     public CityDto update(String id, CityDto dto) {
-        City city =  repository.findById(id).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, City.class.getSimpleName(),id));
-        return CityMapper.toDto(repository.save(setCity(city,dto)));
-    }
-    @Override
-    @Transactional
-    public void delete(String id) {
-        var city = repository.findById(id).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, City.class.getSimpleName(),id));
-        repository.delete(city);
-    }
-    @Override
-    public Page<CityDto> filter(CityDto dto, Pageable pageable) {
-        return PageUtil.pageToDto(repository.findAll(Example.of(toEntity(new City(),dto)),pageable), CityMapper::toDto);
+        City city = repository.findById(id).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, City.class.getSimpleName(), id));
+        return CityMapper.toDto(repository.save(toEntity(city, dto)));
     }
 
-    private City setCity(City city, CityDto dto) {
-        city.setStatus(dto.getStatus());
-        city.setName(dto.getName());
-        return city;
+    @Override
+    public void delete(String id) {
+        repository.delete(repository.findById(id).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, City.class.getSimpleName(), id)));
     }
+
+    @Override
+    public CityDto getById(String cityId) {
+        return CityMapper.toDto(repository.findById(cityId).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, City.class.getSimpleName(), cityId)));
+    }
+
 }

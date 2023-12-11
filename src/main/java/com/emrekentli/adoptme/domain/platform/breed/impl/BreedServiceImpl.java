@@ -35,4 +35,10 @@ public class BreedServiceImpl implements BreedService {
     public void delete(String id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public BreedDto getById(String animalBreedId) {
+        return BreedMapper.toDto(repository.findById(animalBreedId)
+                .orElseThrow( () -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, Breed.class.getSimpleName(),animalBreedId)));
+    }
 }

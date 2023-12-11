@@ -1,10 +1,8 @@
 package com.emrekentli.adoptme.domain.platform.post.impl;
 
+import com.emrekentli.adoptme.domain.platform.post.api.Gender;
 import com.emrekentli.adoptme.library.rest.AbstractEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +22,7 @@ public class Post extends AbstractEntity {
     public static final String TITLE = "title";
     public static final String DESCRIPTION = "description";
     public static final String ANIMAL_BREED_ID = "animal_breed_id";
+    public static final String ANIMAL_TYPE_ID = "animal_type_id";
     public static final String AGE = "age";
     public static final String VERIFIED = "verified";
     public static final String STATUS = "status";
@@ -36,6 +35,10 @@ public class Post extends AbstractEntity {
     @Column(name = OWNER_ID)
     private String ownerId;
 
+    @Column(name = GENDER)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
     @Column(name = TITLE)
     private String title;
 
@@ -44,6 +47,9 @@ public class Post extends AbstractEntity {
 
     @Column(name = ANIMAL_BREED_ID)
     private String animalBreedId;
+
+    @Column(name = ANIMAL_TYPE_ID)
+    private String animalTypeId;
 
     @Column(name = AGE)
     private Integer age;

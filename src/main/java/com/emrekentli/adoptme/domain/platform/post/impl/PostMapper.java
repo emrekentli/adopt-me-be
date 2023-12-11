@@ -6,21 +6,16 @@ public class PostMapper {
     private PostMapper() {
     }
 
-    public static PostDto toDto(Post post) {
-        return PostDto.builder()
-                .id(post.getId())
-                .created(post.getCreated())
-                .modified(post.getModified())
-
-                .build();
-    }
 
     public static Post toEntity(Post post, PostDto dto) {
         post.setAge(dto.getAge());
         post.setAnimalBreedId(dto.getBreed().getId());
-        post.setCityId(dto.getCity());
+        post.setCityId(dto.getCity().getId());
         post.setDescription(dto.getDescription());
-        post.setDistrictId(dto.getDistrict());
+        post.setDistrictId(dto.getDistrict().getId());
+        post.setGender(dto.getGender());
+        post.setOwnerId(dto.getOwner().getId());
+        post.setAnimalTypeId(dto.getAnimalType().getId());
         post.setMainImage(dto.getMainImage());
         post.setImages(dto.getImages());
         post.setStatus(dto.getStatus());

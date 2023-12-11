@@ -25,7 +25,6 @@ public class BreedMapper {
                 .created(tenantDto.getCreated())
                 .modified(tenantDto.getModified())
                 .name(tenantDto.getName())
-
                 .build();
     }
 

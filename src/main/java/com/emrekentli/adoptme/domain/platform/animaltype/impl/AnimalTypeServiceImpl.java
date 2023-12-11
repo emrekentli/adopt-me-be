@@ -35,4 +35,10 @@ public class AnimalTypeServiceImpl  implements AnimalTypeService {
     public void delete(String id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public AnimalTypeDto getById(String animalTypeId) {
+        return AnimalTypeMapper.toDto(repository.findById(animalTypeId)
+                .orElseThrow( () -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,AnimalType.class.getSimpleName(),animalTypeId)));
+    }
 }

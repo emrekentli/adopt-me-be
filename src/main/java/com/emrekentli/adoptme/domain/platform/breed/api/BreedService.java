@@ -10,4 +10,6 @@ public interface BreedService {
     BreedDto update(String id, BreedDto dto);
 
     void delete(String id);
+
+    BreedDto getById(String animalBreedId);
 }

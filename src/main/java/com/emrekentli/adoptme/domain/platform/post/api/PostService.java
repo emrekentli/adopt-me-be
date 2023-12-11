@@ -10,4 +10,6 @@ public interface PostService {
     PostDto update(String id, PostDto dto);
 
     void delete(String id);
+
+    List<PostDto> filter(PostDto post);
 }

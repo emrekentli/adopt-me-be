@@ -10,16 +10,16 @@ public class CityMapper {
     public static CityDto toDto(City city) {
         return CityDto.builder()
                 .id(city.getId())
-                .name(city.getName())
                 .created(city.getCreated())
                 .modified(city.getModified())
+                .name(city.getName())
                 .status(city.getStatus())
                 .build();
     }
 
-    public static City toEntity(City city,CityDto dto) {
-        city.setStatus(dto.getStatus());
-        city.setName(dto.getName());
-        return city;
+    public static City toEntity(City tenant,CityDto tenantDto) {
+        tenant.setName(tenantDto.getName());
+        tenant.setStatus(tenantDto.getStatus());
+        return tenant;
     }
 }

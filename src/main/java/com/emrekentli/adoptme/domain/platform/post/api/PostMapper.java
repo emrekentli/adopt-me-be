@@ -3,6 +3,8 @@ package com.emrekentli.adoptme.domain.platform.post.api;
 import com.emrekentli.adoptme.domain.authentication.user.api.UserDto;
 import com.emrekentli.adoptme.domain.platform.animaltype.api.AnimalTypeDto;
 import com.emrekentli.adoptme.domain.platform.breed.api.BreedDto;
+import com.emrekentli.adoptme.domain.platform.city.api.CityDto;
+import com.emrekentli.adoptme.domain.platform.district.api.DistrictDto;
 import com.emrekentli.adoptme.domain.platform.post.web.PostRequest;
 import com.emrekentli.adoptme.domain.platform.post.web.PostResponse;
 import com.emrekentli.adoptme.library.util.PageUtil;
@@ -22,9 +24,11 @@ public class PostMapper {
                 .breed(BreedDto.builder().id(breed.getAnimalBreedId()).build())
                 .age(breed.getAge())
                 .verified(breed.getVerified())
+                .gender(breed.getGender())
+                .animalType(AnimalTypeDto.builder().id(breed.getAnimalTypeId()).build())
                 .status(breed.getStatus())
-                .city(breed.getCityId())
-                .district(breed.getDistrictId())
+                .city(CityDto.builder().id(breed.getCityId()).build())
+                .district(DistrictDto.builder().id(breed.getDistrictId()).build())
                 .mainImage(breed.getMainImage())
                 .images(breed.getImages())
                 .build();
@@ -38,6 +42,8 @@ public class PostMapper {
                 .owner(post.getOwner())
                 .title(post.getTitle())
                 .description(post.getDescription())
+                .animalType(post.getAnimalType())
+                .gender(post.getGender())
                 .breed(post.getBreed())
                 .age(post.getAge())
                 .verified(post.getVerified())

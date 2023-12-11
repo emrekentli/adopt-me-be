@@ -10,4 +10,6 @@ public interface AnimalTypeService {
     AnimalTypeDto update(String id, AnimalTypeDto dto);
 
     void delete(String id);
+
+    AnimalTypeDto getById(String animalTypeId);
 }

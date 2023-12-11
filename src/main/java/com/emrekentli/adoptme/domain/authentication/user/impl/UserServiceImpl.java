@@ -114,6 +114,11 @@ public class UserServiceImpl implements UserService {
         return toDto(repository.save(user));
     }
 
+    @Override
+    public UserDto getById(String ownerId) {
+        return toDto(repository.findById(ownerId).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,User.class.getSimpleName(),ownerId)));
+    }
+
     private void checkUserHasRole(User user, Role role) {
         if (user.getRoles().contains(role)) {
             throw new IllegalArgumentException("User has this role");
