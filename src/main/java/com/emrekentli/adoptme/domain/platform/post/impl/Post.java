@@ -20,6 +20,7 @@ public class Post extends AbstractEntity {
     public static final String TABLE = "post";
     public static final String OWNER_ID = "owner_id";
     public static final String TITLE = "title";
+    public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
     public static final String ANIMAL_BREED_ID = "animal_breed_id";
     public static final String ANIMAL_TYPE_ID = "animal_type_id";
@@ -41,6 +42,9 @@ public class Post extends AbstractEntity {
 
     @Column(name = TITLE)
     private String title;
+
+    @Column(name = NAME)
+    private String name;
 
     @Column(name = DESCRIPTION)
     private String description;

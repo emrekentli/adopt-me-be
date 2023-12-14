@@ -14,7 +14,6 @@ public class UserResponse {
     private final String id;
     private final Date created;
     private final Date modified;
-    private final String userName;
     private final String password;
     private final String fullName;
     private final String email;
@@ -28,7 +27,6 @@ public class UserResponse {
                 .id(dto.getId())
                 .created(dto.getCreated())
                 .modified(dto.getModified())
-                .userName(dto.getUserName())
                 .password(dto.getPassword())
                 .fullName(dto.getFullName())
                 .email(dto.getEmail())

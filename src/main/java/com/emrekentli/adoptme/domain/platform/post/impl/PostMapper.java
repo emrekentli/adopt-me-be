@@ -10,6 +10,7 @@ public class PostMapper {
     public static Post toEntity(Post post, PostDto dto) {
         post.setAge(dto.getAge());
         post.setAnimalBreedId(dto.getBreed().getId());
+        post.setName(dto.getName());
         post.setCityId(dto.getCity().getId());
         post.setDescription(dto.getDescription());
         post.setDistrictId(dto.getDistrict().getId());

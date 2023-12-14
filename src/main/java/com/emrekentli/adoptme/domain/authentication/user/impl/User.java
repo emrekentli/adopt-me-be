@@ -18,11 +18,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = User.TABLE, uniqueConstraints = {
-        @UniqueConstraint(columnNames = User.COL_USER_NAME),
+        @UniqueConstraint(columnNames = User.COL_EMAIL),
 })
 public class User extends AbstractEntity {
     public static final String TABLE = "usr";
-    public static final String COL_USER_NAME = "user_name";
     public static final String COL_PASSWORD = "password";
     public static final String COL_ACTIVITY = "activity";
     public static final String COL_FULL_NAME = "full_name";
@@ -47,9 +46,6 @@ public class User extends AbstractEntity {
 
     @Column(name = COL_PHONE_NUMBER)
     private  String phoneNumber;
-
-    @Column(name = COL_USER_NAME)
-    private String userName;
 
     @Column(name = COL_PASSWORD)
     private String password;

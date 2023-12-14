@@ -5,6 +5,7 @@ import feign.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, String> {
@@ -28,4 +29,8 @@ public interface PostRepository extends JpaRepository<Post, String> {
                       @Param("cityId") String cityId,
                       @Param("districtId") String districtId,
                       @Param("verified") Boolean verified,
-                      @Param("status") Boolean status);}
+                      @Param("status") Boolean status);
+    List<Post> findAllByAnimalTypeId(String animalTypeId);
+
+    List<Post> findAllByOwnerId(String ownerId);
+}

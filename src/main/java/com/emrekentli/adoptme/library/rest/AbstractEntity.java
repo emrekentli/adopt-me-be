@@ -1,5 +1,8 @@
 package com.emrekentli.adoptme.library.rest;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -7,10 +10,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Base model for all entity classes that uses UUIDs as ID values and provides creation timestamp
@@ -40,5 +39,4 @@ public abstract class AbstractEntity implements Serializable {
     public String toString() {
         return getClass().getSimpleName() + "[id" + id + "]";
     }
-
 }

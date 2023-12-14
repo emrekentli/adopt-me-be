@@ -41,4 +41,10 @@ public class AnimalTypeServiceImpl  implements AnimalTypeService {
         return AnimalTypeMapper.toDto(repository.findById(animalTypeId)
                 .orElseThrow( () -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,AnimalType.class.getSimpleName(),animalTypeId)));
     }
+
+    @Override
+    public AnimalTypeDto getByName(String animal) {
+        return AnimalTypeMapper.toDto(repository.findByNameIgnoreCase(animal)
+                .orElseThrow( () -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,AnimalType.class.getSimpleName(),animal)));
+    }
 }

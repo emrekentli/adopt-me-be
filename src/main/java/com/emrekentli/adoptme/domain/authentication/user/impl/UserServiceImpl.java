@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<UserDto> filterUser(UserDto dto, Pageable pageable) {
-        return repository.filterUser(dto.getUserName(), dto.getFullName(), dto.getEmail(), dto.getPhoneNumber(), pageable)
+        return repository.filterUser(dto.getFullName(), dto.getEmail(), dto.getPhoneNumber(), pageable)
                 .map(this::toDto);
     }
 
@@ -79,12 +79,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found")));
     }
 
-    @Override
-    public UserDto getByUserName(String userName) {
-        return repository.findByUserName(userName)
-                .map(this::toDto)
-                .orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,User.class.getSimpleName(),userName));
-    }
 
     @Override
     public UserDto updateMyUser(UserDto dto) {
@@ -125,17 +119,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public User getUserByUserName(String username) {
-        return repository.findByUserName(username).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,User.class.getSimpleName(),username));
-    }
 
     public void saveUser(User user) {
         repository.save(user);
     }
 
     public User toEntity(User user, UserDto dto) {
-        user.setUserName(dto.getUserName());
-        user.setPassword(passwordEncoder.encode(randomPassword()));
         user.setActivity(true);
         user.setFullName(dto.getFullName());
         user.setImage(dto.getImage());
@@ -145,7 +134,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
     public User toEntity(User user, String password, UserDto dto) {
-        user.setUserName(dto.getUserName());
         user.setPassword(passwordEncoder.encode(password));
         user.setActivity(true);
         user.setFullName(dto.getFullName());
@@ -166,7 +154,6 @@ public class UserServiceImpl implements UserService {
                 .id(user.getId())
                 .created(user.getCreated())
                 .modified(user.getModified())
-                .userName(user.getUserName())
                 .image(user.getImage())
                 .phoneNumber(user.getPhoneNumber())
                 .email(user.getEmail())
@@ -177,10 +164,15 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public void checkUserExists(String userName) {
-        repository.findByEmail(userName)
+    public void checkUserExists(String email) {
+        repository.findByEmail(email)
                 .ifPresent(u -> {
-                    throw new CoreException(MessageCodes.ENTITY_ALREADY_EXISTS,User.class.getSimpleName(),userName);
+                    throw new CoreException(MessageCodes.ENTITY_ALREADY_EXISTS,User.class.getSimpleName(),email);
                 });
+    }
+
+    public User findByEmail(String userName) {
+        return repository.findByEmail(userName)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

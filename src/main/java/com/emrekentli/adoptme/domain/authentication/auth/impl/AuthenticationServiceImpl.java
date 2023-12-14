@@ -30,7 +30,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse login(AuthenticationRequest request) {
-        var user = userService.getUserByUserName(request.getUserName());
+        var user = userService.findByEmail(request.getUserName());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getId(), request.getPassword())
         );
@@ -45,7 +45,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Transactional
     @Override
     public void register(UserRequest request) {
-        userService.checkUserExists(request.getUserName());
+        userService.checkUserExists(request.getEmail());
         var user = userService.toEntity(new User(), request.toDto());
         user.setActivity(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));

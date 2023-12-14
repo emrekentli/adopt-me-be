@@ -16,8 +16,6 @@ public interface UserService {
 
     UserDto getUserDtoById(String id);
 
-    UserDto getByUserName(String userName);
-
     UserDto updateMyUser(UserDto dto);
 
     UserDto addRoleToUser(UserRoleDto roleId);

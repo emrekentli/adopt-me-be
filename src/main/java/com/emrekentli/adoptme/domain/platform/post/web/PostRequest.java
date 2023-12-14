@@ -11,6 +11,7 @@ import java.util.Set;
 public class PostRequest {
     private final String ownerId;
     private final String title;
+    private final String name;
     private final String description;
     private final String animalTypeId;
     private final String animalBreedId;

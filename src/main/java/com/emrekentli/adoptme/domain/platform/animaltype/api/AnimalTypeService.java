@@ -12,4 +12,6 @@ public interface AnimalTypeService {
     void delete(String id);
 
     AnimalTypeDto getById(String animalTypeId);
+
+    AnimalTypeDto getByName(String animal);
 }

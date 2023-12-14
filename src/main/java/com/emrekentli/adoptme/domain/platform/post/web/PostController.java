@@ -35,6 +35,46 @@ public class PostController extends BaseController {
         return respond(PostMapper.toResponse(items));
     }
 
+    @GetMapping("/{id}")
+    public Response<PostResponse> getById(@PathVariable(value = "id") String id) {
+        PostDto item = service.getById(id);
+        return respond(PostMapper.toResponse(item));
+    }
+
+    @GetMapping("/users/{id}")
+    public Response<DataResponse<PostResponse>> getByUserId(@PathVariable(value = "id") String id) {
+        return respond(PostMapper.toResponse(service.getAllByUserId(id)));
+    }
+
+    @GetMapping("/my-user")
+    public Response<DataResponse<PostResponse>> getMyPosts() {
+        return respond(PostMapper.toResponse(service.getMyPosts()));
+    }
+
+    @GetMapping("/dogs")
+    public Response<DataResponse<PostResponse>> getAllDogs() {
+        List<PostDto> items = service.getAllByAnimalType("Köpek");
+        return respond(PostMapper.toResponse(items));
+    }
+
+    @GetMapping("/cats")
+    public Response<DataResponse<PostResponse>> getAllCats() {
+        List<PostDto> items = service.getAllByAnimalType("Kedi");
+        return respond(PostMapper.toResponse(items));
+    }
+
+    @GetMapping("/birds")
+    public Response<DataResponse<PostResponse>> getAllBirds() {
+        List<PostDto> items = service.getAllByAnimalType("Kuş");
+        return respond(PostMapper.toResponse(items));
+    }
+
+    @GetMapping("/others")
+    public Response<DataResponse<PostResponse>> getAllOther() {
+        List<PostDto> items = service.getAllByAnimalType("Diğer");
+        return respond(PostMapper.toResponse(items));
+    }
+
     @GetMapping("/filter")
     public Response<DataResponse<PostResponse>> filter(@RequestParam(required = false) String title,
                                                        @RequestParam(required = false) String description,

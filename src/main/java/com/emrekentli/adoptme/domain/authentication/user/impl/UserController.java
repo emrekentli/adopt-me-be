@@ -54,16 +54,8 @@ public class UserController extends BaseController {
         return respond(toPageResponse(service.getAllUserPageable(pageable)));
     }
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-
-    @GetMapping("/username/{userName}")
-    public Response<UserResponse> getByUserName(@PathVariable(value = "userName") String userName) {
-        return respond(UserResponse.toResponse(service.getByUserName(userName)));
-    }
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-
     @GetMapping("/filter")
     public Response<PageResponse<UserResponse>> filterUser(
-            @RequestParam(required = false) String userName,
             @RequestParam(required = false) String fullName,
             @RequestParam(required = false) String phoneNumber,
             @RequestParam(required = false) String email,
@@ -71,7 +63,6 @@ public class UserController extends BaseController {
             Pageable pageable) {
 
         UserDto dto = UserDto.builder()
-                .userName(userName)
                 .fullName(fullName)
                 .activity(activity)
                 .phoneNumber(phoneNumber)

@@ -19,6 +19,7 @@ public class PostDto {
     private final Date modified;
     private final UserDto owner;
     private final String title;
+    private final String name;
     private final String description;
     private final AnimalTypeDto animalType;
     private final Gender gender;

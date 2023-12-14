@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
+@EnableJpaAuditing
 public class AdoptMeApplication {
 
 	public static void main(String[] args) {

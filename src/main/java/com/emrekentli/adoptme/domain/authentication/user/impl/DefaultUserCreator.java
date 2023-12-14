@@ -16,8 +16,6 @@ public class DefaultUserCreator implements CommandLineRunner {
 
     @Value("${default.user.email}")
     private String email;
-    @Value("${default.user.username}")
-    private String username;
     @Value("${default.user.password}")
     private String password;
 
@@ -26,10 +24,9 @@ public class DefaultUserCreator implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     @Override
     public void run(String... args) throws Exception {
-        if (repository.findUserByUserName(username).isEmpty()) {
+        if (repository.findByEmail(email).isEmpty()) {
            var role =  service.getRolesByRoleNames(Set.of("ROLE_ADMIN"));
             User user = new User();
-            user.setUserName(username);
             user.setPassword(passwordEncoder.encode(password));
             user.setEmail(email);
             user.setFullName("Admin");

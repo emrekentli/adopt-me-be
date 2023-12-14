@@ -12,4 +12,12 @@ public interface PostService {
     void delete(String id);
 
     List<PostDto> filter(PostDto post);
+
+    List<PostDto> getAllByAnimalType(String animalType);
+
+    PostDto getById(String id);
+
+    List<PostDto> getAllByUserId(String id);
+
+    List<PostDto> getMyPosts();
 }

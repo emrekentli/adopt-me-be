@@ -1,5 +1,6 @@
 package com.emrekentli.adoptme.domain.platform.post.impl;
 
+import com.emrekentli.adoptme.domain.authentication.user.api.UserRetrievalService;
 import com.emrekentli.adoptme.domain.authentication.user.api.UserService;
 import com.emrekentli.adoptme.domain.platform.animaltype.api.AnimalTypeService;
 import com.emrekentli.adoptme.domain.platform.breed.api.BreedService;
@@ -23,6 +24,7 @@ public class PostServiceImpl implements PostService {
     private final CityService cityService;
     private final DistrictService districtService;
     private final AnimalTypeService animalTypeService;
+    private final UserRetrievalService userRetrievalService;
 
     @Override
     public PostDto create(PostDto dto) {
@@ -61,9 +63,31 @@ public class PostServiceImpl implements PostService {
                 post.getStatus()).stream().map(this::toDto).toList();
     }
 
+    @Override
+    public List<PostDto> getAllByAnimalType(String animalType) {
+        var animalTypeId = animalTypeService.getByName(animalType).getId();
+        return repository.findAllByAnimalTypeId(animalTypeId).stream().map(this::toDto).toList();
+    }
+
+    @Override
+    public PostDto getById(String id) {
+        return toDto(repository.findById(id).orElseThrow( () -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, Post.class.getSimpleName())));
+    }
+
+    @Override
+    public List<PostDto> getAllByUserId(String id) {
+        return repository.findAllByOwnerId(id).stream().map(this::toDto).toList();
+    }
+
+    @Override
+    public List<PostDto> getMyPosts() {
+        return repository.findAllByOwnerId(userRetrievalService.getCurrentUserId()).stream().map(this::toDto).toList();
+    }
+
     public PostDto toDto(Post post){
         return PostDto.builder()
                 .id(post.getId())
+                .name(post.getName())
                 .created(post.getCreated())
                 .modified(post.getModified())
                 .owner(userService.getById(post.getOwnerId()))
