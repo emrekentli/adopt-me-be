@@ -19,4 +19,5 @@ public interface CityService {
 
     CityDto getById(String cityId);
 
+    String getIdByName(String name);
 }

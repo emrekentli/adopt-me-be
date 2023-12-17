@@ -12,7 +12,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
     @Query("SELECT p FROM Post p " +
             "WHERE (:id IS NULL OR p.ownerId = :id) " +
             "AND (:gender IS NULL OR p.gender = :gender) " +
-            "AND (:title IS NULL OR p.title LIKE CONCAT('%', :title, '%')) " +
+            "AND (:title IS NULL OR LOWER(p.title) LIKE CONCAT('%', LOWER(:title), '%')) " +
             "AND (:description IS NULL OR p.description LIKE CONCAT('%', :description, '%')) " +
             "AND (:animalTypeId IS NULL OR p.animalTypeId = :animalTypeId) " +
             "AND (:breedId IS NULL OR p.animalBreedId = :breedId) " +
@@ -33,4 +33,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
     List<Post> findAllByAnimalTypeId(String animalTypeId);
 
     List<Post> findAllByOwnerId(String ownerId);
+
+    @Query("SELECT p FROM Post p WHERE p.animalTypeId NOT IN (:animalTypeIds)")
+    List<Post> findAllByAnimalTypeIdsNotIn(@Param("animalTypeIds") List<String> animalTypeIds);
 }

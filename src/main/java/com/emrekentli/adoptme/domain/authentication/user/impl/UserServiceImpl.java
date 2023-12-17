@@ -113,6 +113,11 @@ public class UserServiceImpl implements UserService {
         return toDto(repository.findById(ownerId).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,User.class.getSimpleName(),ownerId)));
     }
 
+    @Override
+    public UserDto getMyUser() {
+        return toDto(repository.findById(userRetrievalService.getCurrentUserId()).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND,User.class.getSimpleName(),userRetrievalService.getCurrentUserId())));
+    }
+
     private void checkUserHasRole(User user, Role role) {
         if (user.getRoles().contains(role)) {
             throw new IllegalArgumentException("User has this role");

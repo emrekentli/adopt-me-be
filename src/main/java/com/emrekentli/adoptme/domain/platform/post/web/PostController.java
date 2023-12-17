@@ -78,18 +78,20 @@ public class PostController extends BaseController {
     @GetMapping("/filter")
     public Response<DataResponse<PostResponse>> filter(@RequestParam(required = false) String title,
                                                        @RequestParam(required = false) String description,
-                                                       @RequestParam(required = false) String cityId,
+                                                       @RequestParam(required = false) String cityName,
                                                        @RequestParam(required = false) String districtId,
                                                        @RequestParam(required = false) String breedId,
                                                        @RequestParam(required = false) String animalTypeId,
                                                        @RequestParam(required = false) Integer age,
                                                        @RequestParam(required = false) Boolean status,
                                                        @RequestParam(required = false) Boolean verified,
+                                                       @RequestParam(required = false) String searchValue,
                                                        @RequestParam(required = false) String userId) {
+
         PostDto post = PostDto.builder()
                 .title(title)
                 .description(description)
-                .city(CityDto.builder().id(cityId).build())
+                .city(CityDto.builder().name(cityName).build())
                 .district(DistrictDto.builder().id(districtId).build())
                 .breed(BreedDto.builder().id(breedId).build())
                 .animalType(AnimalTypeDto.builder().id(animalTypeId).build())
@@ -98,7 +100,7 @@ public class PostController extends BaseController {
                 .verified(verified)
                 .owner(UserDto.builder().id(userId).build())
                 .build();
-        List<PostDto> items = service.filter(post);
+        List<PostDto> items = service.filter(post,searchValue);
         return respond(PostMapper.toResponse(items));
     }
 

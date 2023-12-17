@@ -28,7 +28,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto create(PostDto dto) {
-        return toDto(repository.save(PostMapper.toEntity(new Post(),dto)));
+        return toDto(repository.save(PostMapper.toEntity(new Post(), dto)));
     }
 
     @Override
@@ -40,7 +40,7 @@ public class PostServiceImpl implements PostService {
     public PostDto update(String id, PostDto dto) {
         return toDto(repository.save(PostMapper
                 .toEntity(repository.findById(id)
-                        .orElseThrow( () -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, Post.class.getSimpleName())),dto)));
+                        .orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, Post.class.getSimpleName())), dto)));
     }
 
     @Override
@@ -49,7 +49,23 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> filter(PostDto post) {
+    public List<PostDto> filter(PostDto post, String searchValue) {
+        var cityId = post.getCity().getName() != null ? cityService.getIdByName(post.getCity().getName()) : null;
+
+        if (searchValue != null && !searchValue.isEmpty()) {
+            var animalTypeId = animalTypeService.getByName(searchValue).getId();
+            return repository.filter(
+                    post.getOwner().getId(),
+                    post.getGender(),
+                    post.getTitle(),
+                    post.getDescription(),
+                    animalTypeId,
+                    post.getBreed().getId(),
+                    cityId,
+                    post.getDistrict().getId(),
+                    post.getVerified(),
+                    post.getStatus()).stream().map(this::toDto).toList();
+        }
         return repository.filter(
                 post.getOwner().getId(),
                 post.getGender(),
@@ -57,7 +73,7 @@ public class PostServiceImpl implements PostService {
                 post.getDescription(),
                 post.getAnimalType().getId(),
                 post.getBreed().getId(),
-                post.getCity().getId(),
+                cityId,
                 post.getDistrict().getId(),
                 post.getVerified(),
                 post.getStatus()).stream().map(this::toDto).toList();
@@ -65,13 +81,19 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDto> getAllByAnimalType(String animalType) {
+        if(animalType.equals("Diğer")) {
+            var dogId = animalTypeService.getByName("Köpek").getId();
+            var catId = animalTypeService.getByName("Kedi").getId();
+            return repository.findAllByAnimalTypeIdsNotIn(List.of(dogId, catId)).stream().map(this::toDto).toList();
+        }
+
         var animalTypeId = animalTypeService.getByName(animalType).getId();
         return repository.findAllByAnimalTypeId(animalTypeId).stream().map(this::toDto).toList();
     }
 
     @Override
     public PostDto getById(String id) {
-        return toDto(repository.findById(id).orElseThrow( () -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, Post.class.getSimpleName())));
+        return toDto(repository.findById(id).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, Post.class.getSimpleName())));
     }
 
     @Override
@@ -84,7 +106,7 @@ public class PostServiceImpl implements PostService {
         return repository.findAllByOwnerId(userRetrievalService.getCurrentUserId()).stream().map(this::toDto).toList();
     }
 
-    public PostDto toDto(Post post){
+    public PostDto toDto(Post post) {
         return PostDto.builder()
                 .id(post.getId())
                 .name(post.getName())

@@ -11,7 +11,7 @@ public interface PostService {
 
     void delete(String id);
 
-    List<PostDto> filter(PostDto post);
+    List<PostDto> filter(PostDto post, String searchValue);
 
     List<PostDto> getAllByAnimalType(String animalType);
 

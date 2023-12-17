@@ -23,4 +23,6 @@ public interface UserService {
     UserDto removeRoleToUser(UserRoleDto dto);
 
     UserDto getById(String ownerId);
+
+    UserDto getMyUser();
 }

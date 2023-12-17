@@ -56,4 +56,9 @@ public class CityServiceImpl implements CityService {
         return CityMapper.toDto(repository.findById(cityId).orElseThrow(() -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, City.class.getSimpleName(), cityId)));
     }
 
+    @Override
+    public String getIdByName(String name) {
+        return repository.findByNameIgnoreCase(name).orElse(null).getId();
+    }
+
 }

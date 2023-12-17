@@ -34,7 +34,11 @@ public class UserController extends BaseController {
         var user = service.updateUser(id, request.toDto());
         return respond(UserResponse.toResponse(user));
     }
-
+    @GetMapping("/my-user")
+    public Response<UserResponse> getMyUser() {
+        var user = service.getMyUser();
+        return respond(UserResponse.toResponse(user));
+    }
     @PutMapping("/my-user")
     public Response<UserResponse> updateMyUser(@Valid @RequestBody UserRequest request) {
         var user = service.updateMyUser(request.toDto());
