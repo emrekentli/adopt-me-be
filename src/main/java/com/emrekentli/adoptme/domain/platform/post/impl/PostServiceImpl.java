@@ -122,7 +122,7 @@ public class PostServiceImpl implements PostService {
                 .animalType(animalTypeService.getById(post.getAnimalTypeId()))
                 .breed(breedService.getById(post.getAnimalBreedId()))
                 .age(post.getAge())
-                .verified(post.getVerified() != null && post.getVerified())
+                .verified(post.getVerified())
                 .status(post.getStatus() != null && post.getStatus())
                 .city(cityService.getById(post.getCityId()))
                 .district(districtService.getById(post.getDistrictId()))
