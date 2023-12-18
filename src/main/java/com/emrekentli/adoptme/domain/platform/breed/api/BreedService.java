@@ -12,4 +12,6 @@ public interface BreedService {
     void delete(String id);
 
     BreedDto getById(String animalBreedId);
+
+    List<BreedDto> filterBreeds(BreedDto dto);
 }

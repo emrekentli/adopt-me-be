@@ -3,10 +3,7 @@ import com.emrekentli.adoptme.domain.platform.city.api.CityDto;
 import com.emrekentli.adoptme.domain.platform.district.api.DistrictDto;
 import com.emrekentli.adoptme.domain.platform.district.api.DistrictMapper;
 import com.emrekentli.adoptme.domain.platform.district.api.DistrictService;
-import com.emrekentli.adoptme.library.rest.BaseController;
-import com.emrekentli.adoptme.library.rest.MetaResponse;
-import com.emrekentli.adoptme.library.rest.PageResponse;
-import com.emrekentli.adoptme.library.rest.Response;
+import com.emrekentli.adoptme.library.rest.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -25,16 +22,15 @@ public class DistrictController extends BaseController {
     }
 
     @GetMapping("filter")
-    public Response<PageResponse<DistrictResponse>> filter(@RequestParam(required = false) String name,
+    public Response<DataResponse<DistrictResponse>> filter(@RequestParam(required = false) String name,
                                                            @RequestParam(required = false) Boolean status,
-                                                           @RequestParam(required = false) String cityId,
-                                                           Pageable pageable) {
+                                                           @RequestParam(required = false) String cityId) {
         DistrictDto dto = DistrictDto.builder()
                 .name(name)
                 .status(status)
                 .city(CityDto.builder().id(cityId).build())
                 .build();
-        return respond(DistrictMapper.toPageResponse(service.filter(dto, pageable)));
+        return respond(DistrictMapper.toResponse(service.filter(dto)));
     }
 
     @GetMapping("/{id}")

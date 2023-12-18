@@ -19,9 +19,9 @@ public class PostMapper {
         post.setAnimalTypeId(dto.getAnimalType().getId());
         post.setMainImage(dto.getMainImage());
         post.setImages(dto.getImages());
-        post.setStatus(dto.getStatus());
+        post.setStatus(dto.getStatus() != null ? dto.getStatus() : true);
         post.setTitle(dto.getTitle());
-        post.setVerified(dto.getVerified());
+        post.setVerified(dto.getVerified() != null ? dto.getVerified() : false);
         return post;
     }
 }

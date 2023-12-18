@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @Builder
 public class UserDto {
-    private final String id;
+    private  String id;
     private final Date created;
     private final Date modified;
     private final String password;

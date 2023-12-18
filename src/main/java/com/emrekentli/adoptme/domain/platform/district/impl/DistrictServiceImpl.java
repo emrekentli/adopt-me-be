@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static com.emrekentli.adoptme.domain.platform.district.impl.DistrictMapper.toEntity;
 
 
@@ -47,8 +49,8 @@ public class DistrictServiceImpl implements DistrictService {
         repository.delete(city);
     }
     @Override
-    public Page<DistrictDto> filter(DistrictDto dto, Pageable pageable) {
-        return PageUtil.pageToDto(repository.findAll(Example.of(toEntity(new District(),dto)),pageable), district -> DistrictMapper.toDto(district,cityService));
+    public List<DistrictDto> filter(DistrictDto dto) {
+        return (repository.findAll(Example.of(toEntity(new District(),dto)))).stream().map(district -> DistrictMapper.toDto(district,cityService)).toList();
     }
 
     private District setDistrict(District district, DistrictDto dto) {

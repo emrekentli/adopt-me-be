@@ -3,11 +3,13 @@ package com.emrekentli.adoptme.domain.platform.district.api;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 
 public interface DistrictService {
     Page<DistrictDto> getAll(Pageable pageable);
 
-    Page<DistrictDto> filter(DistrictDto dto, Pageable pageable);
+    List<DistrictDto> filter(DistrictDto dto);
 
     DistrictDto getById(String id);
 

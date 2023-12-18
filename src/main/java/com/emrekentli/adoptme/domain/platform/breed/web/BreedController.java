@@ -1,5 +1,6 @@
 package com.emrekentli.adoptme.domain.platform.breed.web;
 
+import com.emrekentli.adoptme.domain.platform.animaltype.api.AnimalTypeDto;
 import com.emrekentli.adoptme.domain.platform.breed.api.BreedDto;
 import com.emrekentli.adoptme.domain.platform.breed.api.BreedMapper;
 import com.emrekentli.adoptme.domain.platform.breed.api.BreedService;
@@ -26,6 +27,17 @@ public class BreedController extends BaseController {
     @GetMapping
     public Response<DataResponse<BreedResponse>> getAll() {
         List<BreedDto> items = service.getAll();
+        return respond(BreedMapper.toResponse(items));
+    }
+
+    @GetMapping("/filter")
+    public Response<DataResponse<BreedResponse>> getAll(@RequestParam(required = false) String name,
+                                                        @RequestParam(required = false) String animalTypeId) {
+        BreedDto dto = BreedDto.builder()
+                .name(name)
+                .animalType(AnimalTypeDto.builder().id(animalTypeId).build())
+                .build();
+        List<BreedDto> items = service.filterBreeds(dto);
         return respond(BreedMapper.toResponse(items));
     }
 

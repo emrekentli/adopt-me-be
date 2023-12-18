@@ -5,6 +5,7 @@ import com.emrekentli.adoptme.domain.platform.breed.api.BreedService;
 import com.emrekentli.adoptme.library.enums.MessageCodes;
 import com.emrekentli.adoptme.library.exception.CoreException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,5 +41,10 @@ public class BreedServiceImpl implements BreedService {
     public BreedDto getById(String animalBreedId) {
         return BreedMapper.toDto(repository.findById(animalBreedId)
                 .orElseThrow( () -> new CoreException(MessageCodes.ENTITY_NOT_FOUND, Breed.class.getSimpleName(),animalBreedId)));
+    }
+
+    @Override
+    public List<BreedDto> filterBreeds(BreedDto dto) {
+        return repository.findAll(Example.of(BreedMapper.toEntity(new Breed(),dto))).stream().map(BreedMapper::toDto).toList();
     }
 }

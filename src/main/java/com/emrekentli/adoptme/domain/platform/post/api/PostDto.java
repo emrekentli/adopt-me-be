@@ -17,7 +17,7 @@ public class PostDto {
     private final String id;
     private final Date created;
     private final Date modified;
-    private final UserDto owner;
+    private UserDto owner;
     private final String title;
     private final String name;
     private final String description;

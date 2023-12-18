@@ -17,6 +17,7 @@ public class BreedMapper {
 
     public static Breed toEntity(Breed tenant, BreedDto tenantDto) {
         tenant.setName(tenantDto.getName());
+        tenant.setAnimalTypeId(tenantDto.getAnimalType().getId());
         return tenant;
     }
 }
