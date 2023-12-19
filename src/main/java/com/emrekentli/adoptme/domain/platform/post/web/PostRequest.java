@@ -1,9 +1,12 @@
 package com.emrekentli.adoptme.domain.platform.post.web;
 
+import com.emrekentli.adoptme.domain.platform.media.api.MediaDto;
 import com.emrekentli.adoptme.domain.platform.post.api.Gender;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Set;
 
 @Data

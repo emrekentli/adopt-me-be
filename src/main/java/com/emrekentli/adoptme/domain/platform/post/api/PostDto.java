@@ -5,8 +5,10 @@ import com.emrekentli.adoptme.domain.platform.animaltype.api.AnimalTypeDto;
 import com.emrekentli.adoptme.domain.platform.breed.api.BreedDto;
 import com.emrekentli.adoptme.domain.platform.city.api.CityDto;
 import com.emrekentli.adoptme.domain.platform.district.api.DistrictDto;
+import com.emrekentli.adoptme.domain.platform.media.api.MediaDto;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.Set;

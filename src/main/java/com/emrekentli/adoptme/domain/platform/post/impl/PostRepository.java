@@ -30,7 +30,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
                       @Param("districtId") String districtId,
                       @Param("verified") Boolean verified,
                       @Param("status") Boolean status);
-    List<Post> findAllByAnimalTypeId(String animalTypeId);
+    List<Post> findAllByAnimalTypeIdAndVerifiedIsTrue(String animalTypeId);
 
     List<Post> findAllByOwnerId(String ownerId);
 

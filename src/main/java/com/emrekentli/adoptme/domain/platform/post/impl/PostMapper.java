@@ -21,7 +21,7 @@ public class PostMapper {
         post.setImages(dto.getImages());
         post.setStatus(dto.getStatus() != null ? dto.getStatus() : true);
         post.setTitle(dto.getTitle());
-        post.setVerified(dto.getVerified() != null ? dto.getVerified() : false);
+        post.setVerified(dto.getVerified());
         return post;
     }
 }

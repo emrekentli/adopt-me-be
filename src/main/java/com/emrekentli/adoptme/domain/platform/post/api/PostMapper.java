@@ -9,6 +9,7 @@ import com.emrekentli.adoptme.domain.platform.post.web.PostRequest;
 import com.emrekentli.adoptme.domain.platform.post.web.PostResponse;
 import com.emrekentli.adoptme.library.util.PageUtil;
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,8 +31,8 @@ public class PostMapper {
                 .status(breed.getStatus())
                 .city(CityDto.builder().id(breed.getCityId()).build())
                 .district(DistrictDto.builder().id(breed.getDistrictId()).build())
-                .mainImage(breed.getMainImage())
                 .images(breed.getImages())
+                .mainImage(breed.getMainImage())
                 .build();
     }
 

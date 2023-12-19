@@ -6,6 +6,8 @@ import com.emrekentli.adoptme.domain.platform.animaltype.api.AnimalTypeService;
 import com.emrekentli.adoptme.domain.platform.breed.api.BreedService;
 import com.emrekentli.adoptme.domain.platform.city.api.CityService;
 import com.emrekentli.adoptme.domain.platform.district.api.DistrictService;
+import com.emrekentli.adoptme.domain.platform.media.api.MediaDto;
+import com.emrekentli.adoptme.domain.platform.media.api.MediaService;
 import com.emrekentli.adoptme.domain.platform.post.api.PostDto;
 import com.emrekentli.adoptme.domain.platform.post.api.PostService;
 import com.emrekentli.adoptme.library.enums.MessageCodes;
@@ -24,6 +26,7 @@ public class PostServiceImpl implements PostService {
     private final CityService cityService;
     private final DistrictService districtService;
     private final AnimalTypeService animalTypeService;
+    private final MediaService mediaService;
     private final UserRetrievalService userRetrievalService;
 
     @Override
@@ -31,7 +34,9 @@ public class PostServiceImpl implements PostService {
         if(dto.getOwner().getId() == null){
             dto.getOwner().setId(userRetrievalService.getCurrentUserId());
         }
-        return toDto(repository.save(PostMapper.toEntity(new Post(), dto)));
+
+        var entity = PostMapper.toEntity(new Post(), dto);
+        return  toDto(repository.save(entity));
     }
 
     @Override
@@ -66,7 +71,7 @@ public class PostServiceImpl implements PostService {
                     post.getBreed().getId(),
                     cityId,
                     post.getDistrict().getId(),
-                    post.getVerified(),
+                    true,
                     post.getStatus()).stream().map(this::toDto).toList();
         }
         return repository.filter(
@@ -78,7 +83,7 @@ public class PostServiceImpl implements PostService {
                 post.getBreed().getId(),
                 cityId,
                 post.getDistrict().getId(),
-                post.getVerified(),
+                true,
                 post.getStatus()).stream().map(this::toDto).toList();
     }
 
@@ -91,7 +96,7 @@ public class PostServiceImpl implements PostService {
         }
 
         var animalTypeId = animalTypeService.getByName(animalType).getId();
-        return repository.findAllByAnimalTypeId(animalTypeId).stream().map(this::toDto).toList();
+        return repository.findAllByAnimalTypeIdAndVerifiedIsTrue(animalTypeId).stream().map(this::toDto).toList();
     }
 
     @Override

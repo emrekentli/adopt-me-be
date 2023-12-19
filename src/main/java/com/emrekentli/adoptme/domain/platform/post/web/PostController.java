@@ -14,6 +14,7 @@ import com.emrekentli.adoptme.library.rest.MetaResponse;
 import com.emrekentli.adoptme.library.rest.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -97,7 +98,7 @@ public class PostController extends BaseController {
                 .animalType(AnimalTypeDto.builder().id(animalTypeId).build())
                 .age(age)
                 .status(status)
-                .verified(verified)
+                .verified(verified != null ? verified : true)
                 .owner(UserDto.builder().id(userId).build())
                 .build();
         List<PostDto> items = service.filter(post,searchValue);
