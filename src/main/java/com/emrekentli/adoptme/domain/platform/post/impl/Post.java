@@ -70,7 +70,7 @@ public class Post extends AbstractEntity {
     @Column(name = DISTRICT_ID)
     private String districtId;
 
-    @Column(name = MAIN_IMAGE)
+    @Column(name = MAIN_IMAGE,columnDefinition = "TEXT")
     private String mainImage;
 
     @Column(name = IMAGES)

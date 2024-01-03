@@ -1,12 +1,12 @@
 package com.emrekentli.adoptme.domain.authentication.auth.impl;
 
+import com.emrekentli.adoptme.domain.authentication.auth.api.AuthenticationService;
 import com.emrekentli.adoptme.domain.authentication.role.impl.Role;
+import com.emrekentli.adoptme.domain.authentication.role.impl.RoleServiceImpl;
 import com.emrekentli.adoptme.domain.authentication.token.impl.TokenRepository;
 import com.emrekentli.adoptme.domain.authentication.user.impl.User;
 import com.emrekentli.adoptme.domain.authentication.user.impl.UserRequest;
 import com.emrekentli.adoptme.domain.authentication.user.impl.UserServiceImpl;
-import com.emrekentli.adoptme.domain.authentication.auth.api.AuthenticationService;
-import com.emrekentli.adoptme.domain.authentication.role.impl.RoleServiceImpl;
 import com.emrekentli.adoptme.library.security.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,7 +48,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userService.checkUserExists(request.getEmail());
         var user = userService.toEntity(new User(), request.toDto());
         user.setActivity(true);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRoles(roleService.getRolesByRoleNames(Set.of("ROLE_USER")));
         userService.saveUser(user);
     }

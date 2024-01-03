@@ -20,6 +20,9 @@ public class District extends AbstractEntity {
     private static final String COL_STATUS = "status";
     private static final String COL_NAME = "name";
     private static final String COL_CITY_ID = "city_id";
+    private static final String COL_LONG = "longitude";
+    private static final String COL_LAT = "latitude";
+
 
     @Column(name = COL_CITY_ID, nullable = false)
     private String cityId;
@@ -29,5 +32,11 @@ public class District extends AbstractEntity {
 
     @Column(name = COL_STATUS)
     private Boolean status;
+
+    @Column(name = COL_LONG)
+    private Double longitude;
+
+    @Column(name = COL_LAT)
+    private Double latitude;
 
 }

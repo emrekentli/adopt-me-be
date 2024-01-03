@@ -30,13 +30,28 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public MediaDto uploadMediaSingle(MultipartFile file) {
+        // Ensure that the media directory exists, and get its absolute path
         String filePath = checkMediaDirectory().getAbsolutePath();
+
+        // Transfer the file to the media directory
         fileTransfer(file, filePath);
-        return MediaDto.builder()
-                .filePath(filePath)
-                .base64Type(Base64.getEncoder().encodeToString(file.getOriginalFilename().getBytes()))
-                .fileName(file.getOriginalFilename())
-                .build();
+
+        try {
+            // Read the content of the file into a byte array
+            byte[] fileContent = file.getBytes();
+
+            // Create a MediaDto object with the necessary information
+            MediaDto mediaDto = MediaDto.builder()
+                    .filePath(filePath)
+                    .base64Type(Base64.getEncoder().encodeToString(fileContent))
+                    .fileName(file.getOriginalFilename())
+                    .build();
+
+            return mediaDto;
+        } catch (IOException e) {
+            // Handle the exception appropriately (e.g., log it or throw a custom exception)
+            throw new RuntimeException("Failed to read file content", e);
+        }
     }
     @Override
     public List<MediaDto> getAllMediaBase64() {

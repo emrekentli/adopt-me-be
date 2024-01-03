@@ -22,6 +22,7 @@ public class DistrictMapper {
     public static District toEntity(District district, DistrictDto dto) {
         district.setStatus(dto.getStatus());
         district.setName(dto.getName());
+        district.setCityId(dto.getCity().getId());
         return district;
     }
 }
